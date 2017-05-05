@@ -1,0 +1,16 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+spring:
+  data:
+    mongodb:
+      database: rental
+      port: 0
+
+trackRidesJob:
+  frequency: 10000
