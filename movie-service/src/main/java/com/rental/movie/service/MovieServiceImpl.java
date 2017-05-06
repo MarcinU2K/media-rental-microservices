@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rental.movie.domain.Movie;
-import com.rental.movie.domain.MovieState;
 import com.rental.movie.repository.MovieRepository;
 
 @Service
@@ -28,7 +27,7 @@ public class MovieServiceImpl implements MovieService {
 			newMovie.setDesc(movie.getDesc());
 			newMovie.setNoOfCopies(movie.getNoOfCopies());
 			newMovie.setPrice(movie.getPrice());
-			newMovie.setMovieState(movie.getMovieState());
+			newMovie.setMovieAvailable(movie.isMovieAvailable());
 			return repository.save(newMovie);
 		}
 		
@@ -41,7 +40,7 @@ public class MovieServiceImpl implements MovieService {
 		Movie currentMovie = repository.findOne(name);
 		
 		if(currentMovie == null){
-			log.error(name + " movie does not exist");
+			log.error("movie " + name + " does not exist");
 			return null;
 		}
 		
@@ -64,8 +63,8 @@ public class MovieServiceImpl implements MovieService {
 			log.info("Description updated");
 		}
 		
-		if(movie.getMovieState() != null){
-			currentMovie.setMovieState(movie.getMovieState());
+		if(movie.isMovieAvailable() != false){
+			currentMovie.setMovieAvailable(true);
 			log.info("Movie state updated");
 		}
 		
@@ -101,6 +100,6 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public Iterable<Movie> getAllAvailableMovies() {
-		return repository.findByMovieStateLike(MovieState.AVAILABLE);
+		return repository.findByMovieAvailableTrue();
 	}
 }

@@ -1,8 +1,12 @@
 package com.rental.movie.controller;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -20,9 +24,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableList;
 import com.rental.movie.MovieServiceApplication;
 import com.rental.movie.domain.Movie;
-import com.rental.movie.domain.MovieState;
 import com.rental.movie.service.MovieService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,11 +54,11 @@ public class MovieControllerTests {
 	
 	@Test
 	public void shouldAddMovie() throws Exception {
-		Movie initialMovie = createMovie();
+		Movie initialMovie = createMovie("movie1234");
 		
 		Movie movie = new Movie();
 		movie.setDesc(initialMovie.getDesc());
-		movie.setMovieState(initialMovie.getMovieState());
+		movie.setMovieAvailable(initialMovie.isMovieAvailable());
 		movie.setName(initialMovie.getName());
 		movie.setNoOfCopies(initialMovie.getNoOfCopies());
 		movie.setPrice(initialMovie.getPrice());
@@ -77,12 +81,103 @@ public class MovieControllerTests {
 		mockMvc.perform(post(url).contentType(MediaType.APPLICATION_JSON)).
 		andExpect(status().isBadRequest());
 	}
+	
+	@Test
+	public void shouldRemoveMovie() throws Exception {
+		String name = "name";
+		String movie = "movie";
+		
+		when(movieService.removeMovie(name)).thenReturn(movie);
+		
+		String url = "/movie/" + name;
+		
+		mockMvc.perform(delete(url)).
+		andExpect(status().isOk());
+	}
+	
+	@Test
+	public void shouldNotRemoveMovieIfNameNull() throws Exception {
+		String name = null;
+		
+		when(movieService.removeMovie(name)).thenReturn(null);
+		
+		String url = "/movie/" + name;
+		
+		mockMvc.perform(delete(url)).
+		andExpect(status().isBadRequest());
+	}
 
-	private Movie createMovie() {
+	@Test
+	public void shouldUpdateMovie() throws Exception {
+		Movie movie = createMovie("movie1234");
+		
+		String movieJson = mapper.writeValueAsString(movie);
+		
+		when(movieService.updateMovie(any(Movie.class))).thenReturn(movie);
+		
+		String url = "/movie";
+		
+		mockMvc.perform(put(url).contentType(MediaType.APPLICATION_JSON).content(movieJson)).
+		andExpect(status().isOk());
+	}
+	
+	@Test
+	public void shouldNotUpdateMovieIfNull() throws Exception {
+		Movie movie = createMovie("movie1234");
+		
+		String movieJson = mapper.writeValueAsString(movie);
+		
+		when(movieService.updateMovie(any(Movie.class))).thenReturn(null);
+		
+		String url = "/movie";
+		
+		mockMvc.perform(put(url).contentType(MediaType.APPLICATION_JSON).content(movieJson)).
+		andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void shouldGetMovieStatus() throws Exception {
+		Movie movie = createMovie("movie1234");
+		String name = "movie1234";
+		
+		when(movieService.getMovieStatus(name)).thenReturn(movie);
+		
+		String url = "/movie/" + name;
+		
+		mockMvc.perform(get(url)).
+		andExpect(status().isOk());
+		
+	}
+	
+	@Test
+	public void shouldGetAllMovies() throws Exception{
+		Movie movie = createMovie("movie1234");
+		
+		when(movieService.getAllMovies()).thenReturn(ImmutableList.of(movie));
+		
+		String url = "/movie/all";
+		
+		mockMvc.perform(get(url)).
+		andExpect(status().isOk());
+	}
+	
+	@Test
+	public void shouldGetAllAvailableMovies() throws Exception{
+		Movie movie = createMovie("movie1234");
+		
+		when(movieService.getAllMovies()).thenReturn(ImmutableList.of(movie));
+		
+		String url = "/movie/available";
+		
+		mockMvc.perform(get(url)).
+		andExpect(status().isOk());
+	}
+	
+	private Movie createMovie(String name) {
 		Movie movie = new Movie();
-		movie.setName("movie1234");
+		movie.setName(name);
 		movie.setDesc("description");
-		movie.setMovieState(MovieState.AVAILABLE);
+		movie.setMovieAvailable(true);
 		movie.setNoOfCopies("22");
 		movie.setPrice("£12");
 		return movie;

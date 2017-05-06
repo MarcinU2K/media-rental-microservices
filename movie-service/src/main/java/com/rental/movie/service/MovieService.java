@@ -1,7 +1,5 @@
 package com.rental.movie.service;
 
-import java.util.List;
-
 import com.rental.movie.domain.Movie;
 
 public interface MovieService {

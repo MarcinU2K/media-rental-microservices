@@ -51,7 +51,7 @@ public class MovieController {
 	 */
 	
 	@RequestMapping(path = "/movie", method = RequestMethod.PUT)
-	public ResponseEntity<Movie> updateMovie(@PathVariable("name") String name, @RequestBody Movie movie){
+	public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie){
 		Movie movieUpdated = movieService.updateMovie(movie);
 		if(movieUpdated == null){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -81,7 +81,7 @@ public class MovieController {
 	 * Method viewing all available movies
 	 */
 	
-	@RequestMapping(path = "/movie/all", method = RequestMethod.GET)
+	@RequestMapping(path = "/movie/available", method = RequestMethod.GET)
 	public Iterable<Movie> getAllAvailableMovies(){
 		return movieService.getAllAvailableMovies();
 	}

@@ -19,7 +19,7 @@ public class Movie {
 	
 	private String noOfCopies;
 	
-	private MovieState movieState;
+	private boolean movieAvailable;
 
 	public String getName() {
 		return name;
@@ -53,11 +53,11 @@ public class Movie {
 		this.noOfCopies = noOfCopies;
 	}
 
-	public MovieState getMovieState() {
-		return movieState;
+	public boolean isMovieAvailable() {
+		return movieAvailable;
 	}
 
-	public void setMovieState(MovieState movieState) {
-		this.movieState = movieState;
+	public void setMovieAvailable(boolean movieAvailable) {
+		this.movieAvailable = movieAvailable;
 	}
 }
