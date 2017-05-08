@@ -15,5 +15,7 @@ public interface MovieService {
 	Iterable<Movie> getAllMovies();
 
 	Iterable<Movie> getAllAvailableMovies();
+
+	Movie getMovieByName(String name);
 	
 }

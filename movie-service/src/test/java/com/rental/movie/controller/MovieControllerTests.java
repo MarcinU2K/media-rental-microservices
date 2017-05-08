@@ -142,7 +142,7 @@ public class MovieControllerTests {
 		
 		when(movieService.getMovieStatus(name)).thenReturn(movie);
 		
-		String url = "/movie/" + name;
+		String url = "/movie/status/" + name;
 		
 		mockMvc.perform(get(url)).
 		andExpect(status().isOk());

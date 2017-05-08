@@ -13,7 +13,7 @@ import com.rental.movie.domain.Movie;
 import com.rental.movie.service.MovieService;
 
 /**
- * movie-service controller code
+ * movie-service code
  * @author Marcin Pisera
  */
 
@@ -27,7 +27,7 @@ public class MovieController {
 	 * Method adding new movie
 	 */
 	
-	@RequestMapping(path = "/movie", method = RequestMethod.POST)
+	@RequestMapping(value = "/movie", method = RequestMethod.POST)
 	public Movie addMovie(@RequestBody Movie movie){
 		return movieService.addMovie(movie);
 	}
@@ -36,7 +36,7 @@ public class MovieController {
 	 * Method removing movie
 	 */
 	
-	@RequestMapping(path = "/movie/{name}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/movie/{name}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> removeMovie(@PathVariable("name") String name){
 		String movie = movieService.removeMovie(name);
 		if(movie == null || name == null){
@@ -50,7 +50,7 @@ public class MovieController {
 	 * Method updating movie
 	 */
 	
-	@RequestMapping(path = "/movie", method = RequestMethod.PUT)
+	@RequestMapping(value = "/movie", method = RequestMethod.PUT)
 	public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie){
 		Movie movieUpdated = movieService.updateMovie(movie);
 		if(movieUpdated == null){
@@ -63,7 +63,7 @@ public class MovieController {
 	 * Method checking movie status
 	 */
 	
-	@RequestMapping(path = "/movie/{name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/movie/status/{name}", method = RequestMethod.GET)
 	public Movie getMovieStatus(@PathVariable("name") String name){
 		return movieService.getMovieStatus(name);
 	}
@@ -72,7 +72,7 @@ public class MovieController {
 	 * Method viewing all movies
 	 */
 	
-	@RequestMapping(path = "/movie/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/movie/all", method = RequestMethod.GET)
 	public Iterable<Movie> getAllMovies(){
 		return movieService.getAllMovies();
 	}
@@ -84,5 +84,14 @@ public class MovieController {
 	@RequestMapping(path = "/movie/available", method = RequestMethod.GET)
 	public Iterable<Movie> getAllAvailableMovies(){
 		return movieService.getAllAvailableMovies();
+	}
+	
+	/**
+	 * Method getting movie by name
+	 */
+	
+	@RequestMapping(path = "/movie/{name}", method = RequestMethod.GET)
+	public Movie getMovieByName(@PathVariable("name") String name){
+		return movieService.getMovieByName(name);
 	}
 }

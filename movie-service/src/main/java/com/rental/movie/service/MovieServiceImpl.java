@@ -8,18 +8,23 @@ import org.springframework.stereotype.Service;
 import com.rental.movie.domain.Movie;
 import com.rental.movie.repository.MovieRepository;
 
+/**
+ * movie-service code
+ * @author Marcin Pisera
+ */
+
 @Service
 public class MovieServiceImpl implements MovieService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private MovieRepository repository;
+	private MovieRepository movieRepository;
 	
 	@Override
 	public Movie addMovie(Movie movie) {
 				
-		Movie currentMovie = repository.findOne(movie.getName());
+		Movie currentMovie = movieRepository.findOne(movie.getName());
 		
 		if(currentMovie == null){
 			Movie newMovie = new Movie();
@@ -28,7 +33,7 @@ public class MovieServiceImpl implements MovieService {
 			newMovie.setNoOfCopies(movie.getNoOfCopies());
 			newMovie.setPrice(movie.getPrice());
 			newMovie.setMovieAvailable(movie.isMovieAvailable());
-			return repository.save(newMovie);
+			return movieRepository.save(newMovie);
 		}
 		
 		log.debug("The movie " + currentMovie.getName() + " is already in our database" );
@@ -37,21 +42,21 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public String removeMovie(String name) {
-		Movie currentMovie = repository.findOne(name);
+		Movie currentMovie = movieRepository.findOne(name);
 		
 		if(currentMovie == null){
 			log.error("movie " + name + " does not exist");
 			return null;
 		}
 		
-		repository.delete(currentMovie);
+		movieRepository.delete(currentMovie);
 		return "movie deleted";
 	}
 
 	@Override
 	public Movie updateMovie(Movie movie) {
 		
-		Movie currentMovie = repository.findOne(movie.getName());
+		Movie currentMovie = movieRepository.findOne(movie.getName());
 		
 		if(currentMovie == null){
 			log.error("The movie " + movie.getName() + " does not exist" );
@@ -79,12 +84,12 @@ public class MovieServiceImpl implements MovieService {
 		
 		currentMovie.setName(movie.getName());
 		
-		return repository.save(currentMovie);
+		return movieRepository.save(currentMovie);
 	}
 
 	@Override
 	public Movie getMovieStatus(String name) {
-		Movie currentMovie = repository.findOne(name);
+		Movie currentMovie = movieRepository.findOne(name);
 		
 		if(currentMovie == null){
 			log.error("The movie does not exist");
@@ -95,11 +100,22 @@ public class MovieServiceImpl implements MovieService {
 
 	@Override
 	public Iterable<Movie> getAllMovies() {
-		return repository.findAll();
+		return movieRepository.findAll();
 	}
 
 	@Override
 	public Iterable<Movie> getAllAvailableMovies() {
-		return repository.findByMovieAvailableTrue();
+		return movieRepository.findByMovieAvailableTrue();
+	}
+
+	@Override
+	public Movie getMovieByName(String name) {
+		Movie existingMovie = movieRepository.findOne(name);
+		
+		if(existingMovie == null){
+			log.error("This movie does not exist");
+			return null;
+		}
+		return existingMovie;
 	}
 }
