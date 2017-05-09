@@ -46,6 +46,12 @@ zuul:
         serviceId: movie-service
         stripPrefix: false
         sensitiveHeaders:
+        
+    rent-service:
+        path: /rents/**
+        serviceId: rent-service
+        stripPrefix: false
+        sensitiveHeaders:
 
 server:
   port: 4000

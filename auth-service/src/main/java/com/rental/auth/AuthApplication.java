@@ -101,8 +101,13 @@ public class AuthApplication {
 					.authorizedGrantTypes("client_credentials", "refresh_token")
 					.scopes("server")
 			.and()
-					.withClient("notification-service")
-					.secret(env.getProperty("NOTIFICATION_SERVICE_PASSWORD"))
+					.withClient("movie-service")
+					.secret(env.getProperty("MOVIE_SERVICE_PASSWORD"))
+					.authorizedGrantTypes("client_credentials", "refresh_token")
+					.scopes("server")
+			.and()
+					.withClient("rent-service")
+					.secret(env.getProperty("RENT_SERVICE_PASSWORD"))
 					.authorizedGrantTypes("client_credentials", "refresh_token")
 					.scopes("server");
 			// @formatter:on

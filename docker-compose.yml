@@ -47,9 +47,10 @@ services:
   auth-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MOVIE_SERVICE_PASSWORD: $MOVIE_SERVICE_PASSWORD
+      RENT_SERVICE_PASSWORD: $RENT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: marcinu2l/microservices:rental-auth-service
     restart: always
@@ -94,7 +95,7 @@ services:
   movie-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      ACCOUNT_SERVICE_PASSWORD: $MOVIE_SERVICE_PASSWORD
+      MOVIE_SERVICE_PASSWORD: $MOVIE_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: marcinu2l/microservices:rental-movie-service
     restart: always
@@ -105,7 +106,28 @@ services:
 
   movie-mongodb:
     environment:
-      INIT_DUMP: movie-service-dump.js
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: marcinu2l/microservices:rental-mongodb
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+        
+  rent-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      RENT_SERVICE_PASSWORD: $RENT_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: marcinu2l/microservices:rental-rent-service
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  rent-mongodb:
+    environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: marcinu2l/microservices:rental-mongodb
     restart: always
@@ -131,28 +153,6 @@ services:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: marcinu2l/microservices:rental-mongodb
     restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  notification-service:
-    environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: marcinu2l/microservices:rental-notification-service
-    restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  notification-mongodb:
-    image: marcinu2l/microservices:rental-mongodb
-    restart: always
-    environment:
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
     logging:
       options:
         max-size: "10m"

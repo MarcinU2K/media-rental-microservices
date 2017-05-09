@@ -66,7 +66,7 @@ public class AccountApplication extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/").permitAll()
-				.anyRequest().authenticated();
+				.antMatchers("/").permitAll();
+//				.anyRequest().authenticated();
 	}
 }

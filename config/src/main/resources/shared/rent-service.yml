@@ -1,8 +1,8 @@
 security:
   oauth2:
     client:
-      clientId: movie-service
-      clientSecret: ${MOVIE_SERVICE_PASSWORD}
+      clientId: rent-service
+      clientSecret: ${RENT_SERVICE_PASSWORD}
       accessTokenUri: http://auth-service:5000/uaa/oauth/token
       grant-type: client_credentials
       scope: server
@@ -10,12 +10,12 @@ security:
 spring:
   data:
     mongodb:
-      host: movie-mongodb
+      host: rent-mongodb
       username: user
       password: ${MONGODB_PASSWORD}
       database: rental
       port: 27017
 
 server:
-  context-path: /movies
-  port: 7100
+  context-path: /rents
+  port: 7200

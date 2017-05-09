@@ -17,7 +17,7 @@
 		<module>account-service</module>
 		<module>movie-service</module>
 		<module>statistics-service</module>
-    <module>rent-service</module>
+		<module>rent-service</module>
   </modules>
 
 </project>

@@ -11,6 +11,6 @@ import com.rental.rent.domain.Movie;
 @FeignClient(name = "movie-service")
 public interface MovieClient {
 
-	@RequestMapping(path = "/movie/{name}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/movies/movie/{name}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	Movie getMovieByName(@PathVariable("name") String name);
 }

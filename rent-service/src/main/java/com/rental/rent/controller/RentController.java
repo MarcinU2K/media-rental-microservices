@@ -28,8 +28,8 @@ public class RentController {
 	 */
 	
 	@RequestMapping(value = "/rent", method = RequestMethod.POST)
-	public Rent addRent(@RequestBody Rent rent) {
-		return rentService.addRent(rent);	
+	public Rent addRent(@RequestBody Rent rent){
+		return rentService.addRent(rent);
 	}
 
 	/**

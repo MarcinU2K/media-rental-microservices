@@ -38,9 +38,19 @@ services:
   movie-service:
     build: movie-service
     ports:
-      - 7000:7000
+      - 7100:7000
 
   movie-mongodb:
+    build: mongodb
+    ports:
+      - 27000:27017
+      
+  rent-service:
+    build: rent-service
+    ports:
+      - 7200:7000
+
+  rent-mongodb:
     build: mongodb
     ports:
       - 27000:27017
@@ -54,16 +64,6 @@ services:
     build: mongodb
     ports:
       - 27000:27017
-
-  notification-service:
-    build: notification-service
-    ports:
-      - 8000:8000
-
-  notification-mongodb:
-    build: mongodb
-    ports:
-      - 28000:27017
 
   monitoring:
     build: monitoring
