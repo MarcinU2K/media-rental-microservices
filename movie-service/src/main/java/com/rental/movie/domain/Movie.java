@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Movie {
 
 	@Id
+	private String id;
+
 	private String name;
 	
 	private String price;
@@ -17,9 +19,19 @@ public class Movie {
 	@Length(max = 1_000)
 	private String desc;
 	
+	private int rentCount;
+	
+	private String imageUri;
+	
 	private String noOfCopies;
 	
-	private boolean movieAvailable;
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -53,11 +65,19 @@ public class Movie {
 		this.noOfCopies = noOfCopies;
 	}
 
-	public boolean isMovieAvailable() {
-		return movieAvailable;
+	public int getRentCount() {
+		return rentCount;
 	}
 
-	public void setMovieAvailable(boolean movieAvailable) {
-		this.movieAvailable = movieAvailable;
+	public void setRentCount(int rentCount) {
+		this.rentCount = rentCount;
+	}
+
+	public String getImageUri() {
+		return imageUri;
+	}
+
+	public void setImageUri(String imageUri) {
+		this.imageUri = imageUri;
 	}
 }

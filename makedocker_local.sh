@@ -14,6 +14,5 @@ docker build -t marcinu2l/microservices:rental-auth-service ./auth-service
 docker build -t marcinu2l/microservices:rental-account-service ./account-service
 docker build -t marcinu2l/microservices:rental-movie-service ./movie-service
 docker build -t marcinu2l/microservices:rental-rent-service ./rent-service
-docker build -t marcinu2l/microservices:rental-statistics-service ./statistics-service
 docker build -t marcinu2l/microservices:rental-monitoring ./monitoring
 docker build -t marcinu2l/microservices:rental-mongodb ./mongodb

@@ -10,6 +10,7 @@ import com.rental.rent.domain.Rent;
 @Repository
 public interface RentRepository extends CrudRepository<Rent, String>{
 
-	List<Rent> findByUserId(String userId);
+	List<Rent> findByOrderedFalseAndUserId(String userId);
 
+	List<Rent> findByOrderedTrueAndUserId(String userId);
 }

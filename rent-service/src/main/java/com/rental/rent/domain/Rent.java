@@ -1,5 +1,7 @@
 package com.rental.rent.domain;
 
+import java.util.Date;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,7 +17,11 @@ public class Rent {
 	
 	private String movieId;
 	
-	private boolean sent;
+	private String movieName;
+	
+	private boolean ordered;
+	
+	private Date date;
 
 	public String getId() {
 		return id;
@@ -41,11 +47,27 @@ public class Rent {
 		this.movieId = movieId;
 	}
 
-	public boolean isSent() {
-		return sent;
+	public boolean isOrdered() {
+		return ordered;
 	}
 
-	public void setSent(boolean sent) {
-		this.sent = sent;
+	public void setOrdered(boolean ordered) {
+		this.ordered = ordered;
+	}
+
+	public String getMovieName() {
+		return movieName;
+	}
+
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

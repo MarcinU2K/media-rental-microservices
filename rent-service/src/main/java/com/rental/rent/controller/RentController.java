@@ -31,13 +31,32 @@ public class RentController {
 	public Rent addRent(@RequestBody Rent rent){
 		return rentService.addRent(rent);
 	}
+	
+	/**
+	 * Method deleting existing rent
+	 */
+	
+	@RequestMapping(value = "/rent/{id}", method = RequestMethod.DELETE)
+	public void deleteRent(@PathVariable("id") String id){
+		rentService.deleteRent(id);
+	}
 
 	/**
 	 * Method viewing rents by userId
 	 */
 	
 	@RequestMapping(value = "/rent/{userId}", method = RequestMethod.GET)
-	public List<Rent> getRentByUserId(@PathVariable("userId") String userId){
-		return rentService.getRentByUserId(userId);
+	public List<Rent> getRentByUserIdOrderFalse(@PathVariable("userId") String userId){
+		return rentService.getRentByUserIdOrderFalse(userId);
+	}
+	
+	@RequestMapping(value = "/rent/all/{userId}", method = RequestMethod.GET)
+	public List<Rent> getRentByUserIdOrderTrue(@PathVariable("userId") String userId){
+		return rentService.getRentByUserIdOrderTrue(userId);
+	}
+	
+	@RequestMapping(value = "/rent/{userId}", method = RequestMethod.PUT)
+	public void completeOrder(@PathVariable("userId") String userId){
+		rentService.completeOrder(userId);
 	}
 }

@@ -1,4 +1,4 @@
-package com.rental.statistics;
+package com.rental.gateway;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,12 +7,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = StatisticsApplication.class)
+@SpringApplicationConfiguration(classes = GatewayApplication.class)
 @WebAppConfiguration
-public class StatisticsServiceApplicationTests {
+public class GatewayApplicationTests {
 
 	@Test
 	public void contextLoads() {
+	}
+
+	@Test
+	public void fire() {
+
 	}
 
 }

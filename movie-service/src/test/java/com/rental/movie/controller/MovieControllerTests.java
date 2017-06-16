@@ -58,7 +58,6 @@ public class MovieControllerTests {
 		
 		Movie movie = new Movie();
 		movie.setDesc(initialMovie.getDesc());
-		movie.setMovieAvailable(initialMovie.isMovieAvailable());
 		movie.setName(initialMovie.getName());
 		movie.setNoOfCopies(initialMovie.getNoOfCopies());
 		movie.setPrice(initialMovie.getPrice());
@@ -97,11 +96,11 @@ public class MovieControllerTests {
 	
 	@Test
 	public void shouldNotRemoveMovieIfNameNull() throws Exception {
-		String name = null;
+		String id = null;
 		
-		when(movieService.removeMovie(name)).thenReturn(null);
+		when(movieService.removeMovie(id)).thenReturn(null);
 		
-		String url = "/movie/" + name;
+		String url = "/movie/" + id;
 		
 		mockMvc.perform(delete(url)).
 		andExpect(status().isBadRequest());
@@ -177,7 +176,6 @@ public class MovieControllerTests {
 		Movie movie = new Movie();
 		movie.setName(name);
 		movie.setDesc("description");
-		movie.setMovieAvailable(true);
 		movie.setNoOfCopies("22");
 		movie.setPrice("£12");
 		return movie;

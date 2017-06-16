@@ -13,6 +13,8 @@ public class Account {
 
 	@Id
 	private String name;
+	
+	private String role;
 
 	private Date lastSeen;
 
@@ -41,5 +43,13 @@ public class Account {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

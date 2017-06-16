@@ -36,13 +36,13 @@ public class MovieController {
 	 * Method removing movie
 	 */
 	
-	@RequestMapping(value = "/movie/{name}", method = RequestMethod.DELETE)
-	public ResponseEntity<String> removeMovie(@PathVariable("name") String name){
-		String movie = movieService.removeMovie(name);
-		if(movie == null || name == null){
+	@RequestMapping(value = "/movie/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> removeMovie(@PathVariable("id") String id){
+		String movie = movieService.removeMovie(id);
+		if(movie == null || id == null){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
-		return ResponseEntity.ok("movie " + name + " deleted");
+		return ResponseEntity.ok("movie " + id + " deleted");
 		
 	}
 	
@@ -75,15 +75,6 @@ public class MovieController {
 	@RequestMapping(value = "/movie/all", method = RequestMethod.GET)
 	public Iterable<Movie> getAllMovies(){
 		return movieService.getAllMovies();
-	}
-	
-	/**
-	 * Method viewing all available movies
-	 */
-	
-	@RequestMapping(path = "/movie/available", method = RequestMethod.GET)
-	public Iterable<Movie> getAllAvailableMovies(){
-		return movieService.getAllAvailableMovies();
 	}
 	
 	/**

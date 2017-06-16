@@ -6,15 +6,13 @@ public interface MovieService {
 
 	Movie addMovie(Movie movie);
 
-	String removeMovie(String name);
+	String removeMovie(String id);
 
 	Movie updateMovie(Movie movie);
 
 	Movie getMovieStatus(String name);
 
 	Iterable<Movie> getAllMovies();
-
-	Iterable<Movie> getAllAvailableMovies();
 
 	Movie getMovieByName(String name);
 	

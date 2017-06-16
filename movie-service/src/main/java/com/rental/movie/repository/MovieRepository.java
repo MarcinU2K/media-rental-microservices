@@ -8,9 +8,6 @@ import com.rental.movie.domain.Movie;
 @Repository
 public interface MovieRepository extends CrudRepository<Movie, String>{
 
-//	@Query(value = "{ movieAvailable: true }")
-//	Iterable<Movie> findAvailableMovies();
-
-	Iterable<Movie> findByMovieAvailableTrue();
+	Movie findByName(String name);
 
 }

@@ -1,5 +1,6 @@
 package com.rental.rent.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -31,25 +32,46 @@ public class RentServiceImpl implements RentService {
 	
 	@Override
 	public Rent addRent(Rent rent) {
-		Movie existingMovie = movieClient.getMovieByName(rent.getMovieId());
+		Movie existingMovie = movieClient.getMovieByName(rent.getMovieName());
 		if(existingMovie == null){
 			log.error("This movie does not exist");
 			return null;
 		}
 		
-		if(rent.getMovieId() == null || rent.getUserId() == null){
+		if(rent.getMovieId() == null || rent.getUserId() == null || rent.getMovieName() == null){
 			log.error("The request is missing required data");
 		}
 		
 		Rent newRent = new Rent();
 		newRent.setMovieId(rent.getMovieId());
 		newRent.setUserId(SecurityContextHolder.getContext().getAuthentication().getName());
-		newRent.setSent(false);
+		newRent.setMovieName(rent.getMovieName());
+		newRent.setOrdered(false);
+		newRent.setDate(new Date());
 		return rentRepository.save(newRent);
 	}
 
 	@Override
-	public List<Rent> getRentByUserId(String userId) {
-		return rentRepository.findByUserId(userId);
+	public void deleteRent(String id) {
+		rentRepository.delete(id);
+	}
+
+	@Override
+	public List<Rent> getRentByUserIdOrderFalse(String userId) {
+		return rentRepository.findByOrderedFalseAndUserId(userId);
+	}
+
+	@Override
+	public List<Rent> getRentByUserIdOrderTrue(String userId) {
+		return rentRepository.findByOrderedTrueAndUserId(userId);
+	}
+
+	@Override
+	public void completeOrder(String userId) {
+		List<Rent> moviesToBeOrdered = rentRepository.findByOrderedFalseAndUserId(userId);
+		for (Rent movie : moviesToBeOrdered) {
+			movie.setOrdered(true);
+			rentRepository.save(movie);
+		}
 	}
 }

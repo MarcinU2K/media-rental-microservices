@@ -8,6 +8,11 @@ public interface RentService {
 
 	Rent addRent(Rent rent);
 
-	List<Rent> getRentByUserId(String userId);
+	List<Rent> getRentByUserIdOrderFalse(String userId);
 
+	List<Rent> getRentByUserIdOrderTrue(String userId);
+
+	void completeOrder(String userId);
+
+	void deleteRent(String id);
 }

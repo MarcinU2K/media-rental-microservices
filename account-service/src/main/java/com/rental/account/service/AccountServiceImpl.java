@@ -40,6 +40,7 @@ public class AccountServiceImpl implements AccountService {
 
 		Account account = new Account();
 		account.setName(user.getUsername());
+		account.setRole("user");
 		account.setLastSeen(new Date());
 
 		repository.save(account);
@@ -56,6 +57,7 @@ public class AccountServiceImpl implements AccountService {
 		Assert.notNull(account, "can't find account with name " + name);
 
 		account.setNote(update.getNote());
+		account.setRole(update.getRole());
 		account.setLastSeen(new Date());
 		repository.save(account);
 

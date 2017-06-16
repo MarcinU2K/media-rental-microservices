@@ -24,7 +24,7 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public Movie addMovie(Movie movie) {
 				
-		Movie currentMovie = movieRepository.findOne(movie.getName());
+		Movie currentMovie = movieRepository.findByName(movie.getName());
 		
 		if(currentMovie == null){
 			Movie newMovie = new Movie();
@@ -32,7 +32,8 @@ public class MovieServiceImpl implements MovieService {
 			newMovie.setDesc(movie.getDesc());
 			newMovie.setNoOfCopies(movie.getNoOfCopies());
 			newMovie.setPrice(movie.getPrice());
-			newMovie.setMovieAvailable(movie.isMovieAvailable());
+			newMovie.setRentCount(movie.getRentCount());
+			newMovie.setImageUri(movie.getImageUri());
 			return movieRepository.save(newMovie);
 		}
 		
@@ -41,11 +42,11 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public String removeMovie(String name) {
-		Movie currentMovie = movieRepository.findOne(name);
+	public String removeMovie(String id) {
+		Movie currentMovie = movieRepository.findOne(id);
 		
 		if(currentMovie == null){
-			log.error("movie " + name + " does not exist");
+			log.error("movie " + id + " does not exist");
 			return null;
 		}
 		
@@ -56,7 +57,7 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	public Movie updateMovie(Movie movie) {
 		
-		Movie currentMovie = movieRepository.findOne(movie.getName());
+		Movie currentMovie = movieRepository.findOne(movie.getId());
 		
 		if(currentMovie == null){
 			log.error("The movie " + movie.getName() + " does not exist" );
@@ -68,11 +69,6 @@ public class MovieServiceImpl implements MovieService {
 			log.info("Description updated");
 		}
 		
-		if(movie.isMovieAvailable() != false){
-			currentMovie.setMovieAvailable(true);
-			log.info("Movie state updated");
-		}
-		
 		if(movie.getNoOfCopies() != null){
 			currentMovie.setNoOfCopies(movie.getNoOfCopies());
 			log.info("Number of copies updated");
@@ -80,6 +76,14 @@ public class MovieServiceImpl implements MovieService {
 		
 		if(movie.getPrice() != null){
 			currentMovie.setPrice(movie.getPrice());
+		}
+		
+		if(movie.getRentCount() != 0){
+			currentMovie.setRentCount(movie.getRentCount());
+		}
+		
+		if(movie.getImageUri() != null){
+			currentMovie.setImageUri(movie.getImageUri());
 		}
 		
 		currentMovie.setName(movie.getName());
@@ -104,13 +108,8 @@ public class MovieServiceImpl implements MovieService {
 	}
 
 	@Override
-	public Iterable<Movie> getAllAvailableMovies() {
-		return movieRepository.findByMovieAvailableTrue();
-	}
-
-	@Override
 	public Movie getMovieByName(String name) {
-		Movie existingMovie = movieRepository.findOne(name);
+		Movie existingMovie = movieRepository.findByName(name);
 		
 		if(existingMovie == null){
 			log.error("This movie does not exist");
